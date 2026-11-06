@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { brand, sections } from "../data/content";
+import Logo from "./Logo";
 
 /**
  * Hero top bar: brand framed by fine rules on the left, section links on
@@ -31,7 +32,7 @@ export default function MainNavigation() {
     <header className="main-nav">
       <a href="#home" className="brand-mark" aria-label={`${brand.name}, home`}>
         <span className="brand-mark__rule" aria-hidden="true" />
-        <span className="brand-mark__name">Valiente Couture</span>
+        <Logo className="brand-mark__logo" priority />
         <span className="brand-mark__rule" aria-hidden="true" />
       </a>
 
@@ -78,9 +79,7 @@ export default function MainNavigation() {
         >
           Close <span aria-hidden="true">&times;</span>
         </button>
-        <p className="mobile-menu__brand">
-          Valiente <em>Couture</em>
-        </p>
+        <Logo className="mobile-menu__logo" />
         <ul>
           {sections.map((item, index) => (
             <li key={item.id}>

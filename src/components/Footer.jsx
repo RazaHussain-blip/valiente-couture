@@ -1,4 +1,5 @@
 import { brand, contact, sections } from "../data/content";
+import Logo from "./Logo";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -8,8 +9,8 @@ export default function Footer() {
       <div className="container-x">
         <div className="footer-grid">
           <div className="footer-brand">
-            <a href="#home" className="footer-brand__name">
-              Valiente <em>Couture</em>
+            <a href="#home" className="footer-brand__name" aria-label={`${brand.name}, back to top`}>
+              <Logo tone="ivory" className="footer-logo" />
             </a>
             <p>{brand.tagline}</p>
           </div>

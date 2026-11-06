@@ -3081,3 +3081,33 @@ main > section {
 .story-quote blockquote p {
   max-width: 24ch;
 }
+
+/* --- Client logo --- */
+.logo {
+  display: block;
+  line-height: 0;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.brand-mark__logo {
+  width: clamp(9.5rem, 13vw, 12.5rem);
+}
+
+.mobile-menu__logo {
+  width: 13rem;
+}
+
+.footer-logo {
+  width: 13.5rem;
+}
+
+@media (max-width: 899px) {
+  .brand-mark__logo {
+    width: 8.75rem;
+  }
+}

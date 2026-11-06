@@ -96,6 +96,14 @@ export const images = {
   tailoringDetail: photos.owner,
 };
 
+/** Client logo (transparent versions extracted from "logo 2.png" by scripts/extract-logo.mjs). */
+export const logo = {
+  burgundy: `${BASE}images/logo-burgundy`,
+  ivory: `${BASE}images/logo-ivory`,
+  w: 1200,
+  h: 311,
+};
+
 /** Decorative SVG assets supplied by the client (public/images). */
 export const svgAssets = {
   sewingMachine: `${BASE}images/sewing-machine-fashion-svgrepo-com.svg`,
