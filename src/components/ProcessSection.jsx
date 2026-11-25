@@ -3,7 +3,7 @@ import Photo from "./Photo";
 import CoCreationSection from "./CoCreationSection";
 import { FabricLabel } from "./decor/Textiles";
 
-/** "A timeless personal style": the four steps laid side by side as cards. */
+/** "A timeless personal style": alternating rows of text and photo. */
 export default function ProcessSection() {
   return (
     <section id="process" className="process" aria-labelledby="process-title">
@@ -19,16 +19,18 @@ export default function ProcessSection() {
           <ul className="journey-list">
             {processSteps.map((step) => (
               <li key={step.number} className="journey-card" data-reveal>
-                <Photo
-                  image={step.image}
-                  className="journey-card__photo"
-                  compact
-                  sizes="(min-width: 1200px) 18rem, (min-width: 640px) 45vw, 92vw"
-                />
                 <div className="journey-card__body">
                   <p className="journey-card__label">{step.caption}</p>
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
+                </div>
+                <div className="journey-card__media">
+                  <Photo
+                    image={step.image}
+                    className="journey-card__photo"
+                    compact
+                    sizes="(min-width: 900px) 40vw, 92vw"
+                  />
                 </div>
               </li>
             ))}

@@ -892,25 +892,36 @@ main > section {
   padding-block: var(--section-space);
 }
 
-/* "A timeless personal style" - four cards side by side */
+/* "A timeless personal style" - alternating rows:
+   text | photo, then photo | text, and so on */
 .journey-list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 7vw, 5.5rem);
   margin-top: clamp(2.5rem, 5vw, 4rem);
 }
 
 .journey-card {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 10px 0;
-  background: var(--paper);
-  box-shadow: var(--shadow-card);
-  transition: transform 0.5s var(--ease-out), box-shadow 0.5s ease;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: center;
 }
 
-.journey-card:hover {
-  transform: translateY(-6px);
+/* phones: photo above its text */
+.journey-card__media {
+  order: -1;
+}
+
+.journey-card__media {
+  padding: 10px;
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s ease;
+}
+
+.journey-card:hover .journey-card__media {
+  transform: translateY(-4px);
   box-shadow: 0 32px 50px -26px rgba(74, 53, 49, 0.4);
 }
 
@@ -924,53 +935,58 @@ main > section {
 
 .journey-card__body {
   position: relative;
-  flex: 1;
-  padding: 1.4rem 0.9rem 1.75rem;
-}
-
-.journey-card__body::before {
-  content: "";
-  position: absolute;
-  inset: 0.6rem 0 0;
-  border-top: 1.5px dashed var(--stitch);
-  pointer-events: none;
+  max-width: 34rem;
 }
 
 .journey-card__label {
-  font-size: 0.82rem;
+  display: inline-block;
+  padding-bottom: 0.45rem;
+  border-bottom: 1.5px dashed var(--stitch);
+  font-size: 0.88rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   line-height: 1.5;
   text-transform: uppercase;
   color: var(--rose-deep);
 }
 
 .journey-card h3 {
-  margin: 0.55rem 0 0.6rem;
-  font-size: clamp(1.45rem, 1.8vw, 1.65rem);
-  line-height: 1.2;
+  margin: 0.9rem 0 0.8rem;
+  font-size: clamp(1.75rem, 2.6vw, 2.3rem);
+  line-height: 1.15;
 }
 
 .journey-card__body > p:last-child {
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: 1.15rem;
+  line-height: 1.8;
 }
 
-@media (min-width: 640px) {
-  .journey-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1200px) {
-  .journey-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.5rem;
-    align-items: start;
+@media (min-width: 900px) {
+  .journey-card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
   }
 
-  .journey-card:nth-child(even) {
-    margin-top: 2.5rem;
+  /* odd rows: text left, photo right */
+  .journey-card__media {
+    order: 0;
+  }
+
+  /* even rows: photo left, text right */
+  .journey-card:nth-child(even) .journey-card__media {
+    order: -1;
+  }
+
+  .journey-card:nth-child(odd) .journey-card__media {
+    transform: rotate(1.2deg);
+  }
+
+  .journey-card:nth-child(even) .journey-card__media {
+    transform: rotate(-1.2deg);
+  }
+
+  .journey-card:hover .journey-card__media {
+    transform: rotate(0deg) translateY(-4px);
   }
 }
 
@@ -1781,10 +1797,6 @@ main > section {
   transform: none;
 }
 
-/* Cards keep their own hover lift / tilt once revealed */
-.reveal-ready .journey-card.is-revealed:hover {
-  transform: translateY(-6px);
-}
 
 /* =================================================================
    Responsive
