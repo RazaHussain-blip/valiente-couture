@@ -1941,3 +1941,234 @@ main > section {
     transform: none;
   }
 }
+
+/* =================================================================
+   Intro doors - frosted glass entrance shown on page load
+   Timings are mirrored in IntroDoors.jsx (content 350ms, doors 1.2s
+   after a 150ms delay).
+================================================================= */
+
+:root {
+  --door-ease: cubic-bezier(0.76, 0, 0.24, 1);
+  --door-time: 1.2s;
+  --door-delay: 0.15s;
+}
+
+/* The page sits slightly back behind the glass, then steps forward */
+.site-stage--closed,
+.site-stage--opening {
+  transform-origin: 50% 50vh;
+}
+
+.site-stage--closed {
+  transform: scale(0.97);
+}
+
+.site-stage--opening {
+  transform: scale(1);
+  transition: transform var(--door-time) var(--door-ease) var(--door-delay);
+}
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.intro--opening {
+  pointer-events: none;
+}
+
+.intro__door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 40%, rgba(225, 153, 153, 0.08)),
+    rgba(251, 244, 239, 0.55);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+  backdrop-filter: blur(20px) saturate(1.1);
+  transition: transform var(--door-time) var(--door-ease) var(--door-delay);
+  will-change: transform;
+}
+
+.intro__door--left {
+  left: 0;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.45);
+}
+
+.intro__door--right {
+  right: 0;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.45);
+}
+
+/* The seam where the doors meet: a fine #E19999 line with a soft glow */
+.intro__door--left::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  /* bright above and below, fading out behind the centre content */
+  background: linear-gradient(
+    180deg,
+    rgba(225, 153, 153, 0) 0%,
+    #e19999 14%,
+    rgba(225, 153, 153, 0.55) 26%,
+    rgba(225, 153, 153, 0) 33%,
+    rgba(225, 153, 153, 0) 67%,
+    rgba(225, 153, 153, 0.55) 74%,
+    #e19999 86%,
+    rgba(225, 153, 153, 0) 100%
+  );
+  box-shadow: 0 0 10px 1px rgba(225, 153, 153, 0.55);
+}
+
+.intro--opening .intro__door--left {
+  transform: translateX(-100%);
+}
+
+.intro--opening .intro__door--right {
+  transform: translateX(100%);
+}
+
+/* Centre content */
+.intro__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100% - 2.5rem, 36rem);
+  text-align: center;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* soft rose light behind the logo */
+.intro__content::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -30% -25%;
+  background: radial-gradient(closest-side, rgba(225, 153, 153, 0.22), rgba(225, 153, 153, 0));
+  pointer-events: none;
+}
+
+.intro--opening .intro__content {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+.intro__content > * {
+  animation: intro-rise 0.9s var(--ease-out) both;
+}
+
+.intro__content > :nth-child(1) { animation-delay: 0.15s; }
+.intro__content > :nth-child(2) { animation-delay: 0.35s; }
+.intro__content > :nth-child(3) { animation-delay: 0.5s; }
+.intro__content > :nth-child(4) { animation-delay: 0.65s; }
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.intro__logo {
+  width: clamp(13rem, 32vw, 19rem);
+}
+
+.intro__heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  color: var(--rose-deep);
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.intro__rule {
+  flex: none;
+  width: 2.5rem;
+  border-top: 1px solid #e19999;
+}
+
+.intro__text {
+  max-width: 32ch;
+  margin-top: 1rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.intro__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 3.4rem;
+  margin-top: 2rem;
+  padding: 0.9rem 2rem;
+  border: 1px solid #e19999;
+  background: rgba(255, 250, 246, 0.7);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  outline: 1px dashed rgba(225, 153, 153, 0.7);
+  outline-offset: 4px;
+  box-shadow: 0 12px 30px -14px rgba(225, 153, 153, 0.8);
+  cursor: pointer;
+  transition:
+    background-color 0.35s ease,
+    box-shadow 0.35s ease,
+    outline-offset 0.35s ease;
+}
+
+.intro__button:hover {
+  background: #e19999;
+  outline-offset: 6px;
+  box-shadow: 0 16px 34px -12px rgba(225, 153, 153, 0.95);
+}
+
+.intro__button:focus-visible {
+  outline: 2px solid #e19999;
+  outline-offset: 5px;
+}
+
+.intro__arrow {
+  transition: transform 0.35s var(--ease-out);
+}
+
+.intro__button:hover .intro__arrow {
+  transform: translateX(5px);
+}
+
+@media (max-width: 420px) {
+  .intro__rule {
+    display: none;
+  }
+
+  .intro__heading {
+    letter-spacing: 0.18em;
+  }
+}
