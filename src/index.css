@@ -2041,7 +2041,7 @@ main > section {
 
 .store__front {
   display: grid;
-  grid-template-columns: clamp(1.5rem, 4vw, 4rem) minmax(0, 1fr) minmax(19rem, 36vw) minmax(0, 1fr) clamp(1.5rem, 4vw, 4rem);
+  grid-template-columns: clamp(1rem, 4vw, 4rem) minmax(0, 1fr) clamp(1rem, 4vw, 4rem);
   min-height: 0;
 }
 
@@ -2055,35 +2055,7 @@ main > section {
     inset 6px 0 10px -8px rgba(74, 53, 49, 0.4);
 }
 
-/* Display windows with the client's garments */
-.store__window {
-  padding: clamp(0.9rem, 2.4vh, 1.6rem) clamp(0.75rem, 1.6vw, 1.5rem) 0;
-  background: var(--stone);
-}
-
-.store__window-glass {
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-  border: 10px solid var(--bronze);
-  border-bottom-width: 18px;
-  background: #efe5dc;
-  box-shadow:
-    inset 0 0 0 1px var(--bronze-dark),
-    0 0 0 1px var(--bronze-dark),
-    0 14px 30px -18px rgba(74, 53, 49, 0.55);
-}
-
-.store__window-glass img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.92) brightness(1.03);
-}
-
 /* reflections on the glass */
-.store__window-glass::after,
 .store__door::before {
   content: "";
   position: absolute;
@@ -2329,18 +2301,10 @@ main > section {
   transform: translateX(5px);
 }
 
-/* Phones & narrow tablets: just the entrance between two pilasters */
+/* Phones: slimmer door frames */
 @media (max-width: 767px) {
   :root {
     --fascia-h: clamp(6rem, 16vh, 8rem);
-  }
-
-  .store__front {
-    grid-template-columns: clamp(1rem, 5vw, 2rem) minmax(0, 1fr) clamp(1rem, 5vw, 2rem);
-  }
-
-  .store__window {
-    display: none;
   }
 
   .store__door {

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { brand, hero } from "../data/content";
-import { images } from "../data/images";
 import Logo from "./Logo";
 
 /* Keep in step with "Storefront intro" timings in index.css:
@@ -8,8 +7,8 @@ import Logo from "./Logo";
 const TOTAL_MS = 2700;
 
 /**
- * Boutique storefront shown on page load: the logo on the sign band,
- * display windows with the client's garments, and a pair of glass doors.
+ * Boutique storefront shown on page load: the logo on the sign band and
+ * a full-width pair of glass doors.
  * "Explore the Website" swings the doors open on their hinges, then the
  * view walks through the doorway into the site, and the overlay unmounts.
  *
@@ -66,12 +65,6 @@ export default function StorefrontIntro({ phase, onOpen, onDone }) {
         <div className="store__front">
           <div className="store__pilaster" />
 
-          <div className="store__window">
-            <div className="store__window-glass">
-              <img src={`${images.equestrian.webp}-640.webp`} alt="" decoding="async" style={{ objectPosition: "50% 30%" }} />
-            </div>
-          </div>
-
           <div className="store__entrance">
             <div className="store__doorway" ref={doorwayRef}>
               <div className="store__door store__door--left">
@@ -80,12 +73,6 @@ export default function StorefrontIntro({ phase, onOpen, onDone }) {
               <div className="store__door store__door--right">
                 <span className="store__handle" />
               </div>
-            </div>
-          </div>
-
-          <div className="store__window">
-            <div className="store__window-glass">
-              <img src={`${images.dresses.webp}-640.webp`} alt="" decoding="async" style={{ objectPosition: "50% 35%" }} />
             </div>
           </div>
 
