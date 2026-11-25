@@ -3,15 +3,14 @@
 /* =================================================================
    VALIENTE COUTURE - Couture atelier design system
    One plain warm-ivory background throughout, #E19999 rose accents and
-   stitched (dashed) details. Maroon is reserved for headings and the
-   footer quick links only.
+   stitched (dashed) details. Headings and the footer quick links use
+   the #E19999 rose.
 ================================================================= */
 
 @theme {
   --color-rose: #e19999;
   --color-rose-strong: #b86e6e; /* accent shade for large type */
   --color-rose-deep: #a65f5f; /* accent shade for small text */
-  --color-maroon: #6b2a36; /* headings + footer quick links ONLY */
   --color-ivory: #fbf6ef;
   --color-cream: #f5ece2;
   --color-blush: #f7e5e0;
@@ -30,7 +29,6 @@
   --ivory: var(--color-ivory);
   --cream: var(--color-cream);
   --blush: var(--color-blush);
-  --maroon: var(--color-maroon);
   --ink: var(--color-ink);
   --muted: var(--color-muted);
   --rose: var(--color-rose);
@@ -71,7 +69,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-heading);
-  color: var(--maroon);
+  color: var(--rose);
   font-weight: 500;
 }
 
@@ -1726,9 +1724,9 @@ main > section {
   font-size: 1.1rem;
 }
 
-/* Footer quick links: maroon */
+/* Footer quick links: rose */
 .footer-links a {
-  color: var(--maroon);
+  color: var(--rose);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.3s ease;
