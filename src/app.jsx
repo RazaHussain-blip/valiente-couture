@@ -6,7 +6,7 @@ import ProcessSection from "./components/ProcessSection";
 import PortfolioSection from "./components/PortfolioSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
-import IntroDoors from "./components/IntroDoors";
+import StorefrontIntro from "./components/StorefrontIntro";
 
 function App() {
   useReveal();
@@ -32,7 +32,7 @@ function App() {
         <Footer />
       </div>
 
-      {introActive && <IntroDoors phase={intro} onOpen={openIntro} onDone={finishIntro} />}
+      {introActive && <StorefrontIntro phase={intro} onOpen={openIntro} onDone={finishIntro} />}
     </>
   );
 }

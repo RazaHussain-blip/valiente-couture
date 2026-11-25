@@ -1943,18 +1943,26 @@ main > section {
 }
 
 /* =================================================================
-   Intro doors - frosted glass entrance shown on page load
-   Timings are mirrored in IntroDoors.jsx (content 350ms, doors 1.2s
-   after a 150ms delay).
+   Storefront intro - boutique entrance shown on page load
+   Timeline after "Explore the Website" (mirrored in StorefrontIntro.jsx):
+     0 - 0.4s     sign text and button fade
+     0.3 - 1.7s   glass doors swing open on their hinges
+     1.35 - 2.6s  the view walks through the doorway into the site
 ================================================================= */
 
 :root {
-  --door-ease: cubic-bezier(0.76, 0, 0.24, 1);
-  --door-time: 1.2s;
-  --door-delay: 0.15s;
+  --stone: #f5eee7;
+  --stone-light: #fcf8f4;
+  --stone-shade: #e6dbd1;
+  --bronze: #8c7660;
+  --bronze-dark: #5f5043;
+  --bronze-light: #bba68f;
+  --walk-ease: cubic-bezier(0.7, 0, 0.25, 1);
+  --fascia-h: clamp(7.5rem, 20vh, 11rem);
+  --floor-h: clamp(2.75rem, 8vh, 5rem);
 }
 
-/* The page sits slightly back behind the glass, then steps forward */
+/* The page waits slightly back, then comes forward as we step inside */
 .site-stage--closed,
 .site-stage--opening {
   transform-origin: 50% 50vh;
@@ -1966,122 +1974,299 @@ main > section {
 
 .site-stage--opening {
   transform: scale(1);
-  transition: transform var(--door-time) var(--door-ease) var(--door-delay);
+  transition: transform 1.25s var(--walk-ease) 1.35s;
 }
 
-.intro {
+.store {
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: grid;
-  place-items: center;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
   overflow: hidden;
 }
 
-.intro--opening {
+.store--opening {
   pointer-events: none;
 }
 
-.intro__door {
+/* ---- Facade: every block is opaque except the doorway ---- */
+.store__facade {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
+  inset: 0;
+  display: grid;
+  grid-template-rows: var(--fascia-h) minmax(0, 1fr) var(--floor-h);
+  transform-origin: var(--zoom-origin, 50% 60%);
+  transition:
+    transform 1.25s var(--walk-ease) 1.35s,
+    opacity 0.45s ease 2.15s;
+}
+
+.store--opening .store__facade {
+  transform: scale(var(--zoom-scale, 4));
+  opacity: 0;
+}
+
+/* Sign band with the client's logo */
+.store__fascia {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, var(--stone-light), var(--stone) 70%, var(--stone-shade));
+  box-shadow: inset 0 -10px 18px -12px rgba(74, 53, 49, 0.35);
+}
+
+/* cornice mouldings */
+.store__fascia::before,
+.store__fascia::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(140, 118, 96, 0.35);
+}
+
+.store__fascia::before {
+  top: 0.9rem;
+  box-shadow: 0 4px 0 rgba(140, 118, 96, 0.18);
+}
+
+.store__fascia::after {
+  bottom: 0.9rem;
+}
+
+.store__logo {
+  width: clamp(13rem, 30vw, 24rem);
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.9)) drop-shadow(0 6px 10px rgba(225, 153, 153, 0.35));
+}
+
+.store__front {
+  display: grid;
+  grid-template-columns: clamp(1.5rem, 4vw, 4rem) minmax(0, 1fr) minmax(19rem, 36vw) minmax(0, 1fr) clamp(1.5rem, 4vw, 4rem);
+  min-height: 0;
+}
+
+/* fluted stone pilasters */
+.store__pilaster {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 40%, rgba(225, 153, 153, 0.08)),
-    rgba(251, 244, 239, 0.55);
-  -webkit-backdrop-filter: blur(20px) saturate(1.1);
-  backdrop-filter: blur(20px) saturate(1.1);
-  transition: transform var(--door-time) var(--door-ease) var(--door-delay);
+    repeating-linear-gradient(90deg, rgba(140, 118, 96, 0.12) 0 1px, transparent 1px 9px),
+    linear-gradient(90deg, var(--stone-shade), var(--stone-light) 45%, var(--stone));
+  box-shadow:
+    inset -6px 0 10px -8px rgba(74, 53, 49, 0.4),
+    inset 6px 0 10px -8px rgba(74, 53, 49, 0.4);
+}
+
+/* Display windows with the client's garments */
+.store__window {
+  padding: clamp(0.9rem, 2.4vh, 1.6rem) clamp(0.75rem, 1.6vw, 1.5rem) 0;
+  background: var(--stone);
+}
+
+.store__window-glass {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border: 10px solid var(--bronze);
+  border-bottom-width: 18px;
+  background: #efe5dc;
+  box-shadow:
+    inset 0 0 0 1px var(--bronze-dark),
+    0 0 0 1px var(--bronze-dark),
+    0 14px 30px -18px rgba(74, 53, 49, 0.55);
+}
+
+.store__window-glass img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) brightness(1.03);
+}
+
+/* reflections on the glass */
+.store__window-glass::after,
+.store__door::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.32) 38%, rgba(255, 255, 255, 0) 46%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.18) 56%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(180deg, rgba(255, 250, 246, 0.18), rgba(255, 250, 246, 0) 50%);
+  pointer-events: none;
+}
+
+/* Entrance: the stone around the frame is drawn with borders, so the
+   doorway itself stays see-through to the website behind */
+.store__entrance {
+  display: flex;
+  border-top: clamp(0.6rem, 1.8vh, 1.1rem) solid var(--stone);
+  border-left: clamp(0.5rem, 1vw, 1rem) solid var(--stone);
+  border-right: clamp(0.5rem, 1vw, 1rem) solid var(--stone);
+}
+
+.store__doorway {
+  position: relative;
+  flex: 1;
+  display: flex;
+  border: 12px solid var(--bronze);
+  border-bottom: 0;
+  box-shadow:
+    inset 0 0 0 1px var(--bronze-dark),
+    0 0 0 1px var(--bronze-dark);
+  perspective: 1600px;
+  perspective-origin: 50% 45%;
+}
+
+/* warm interior light spilling through as the doors open */
+.store__doorway::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 244, 236, 0.75), rgba(255, 244, 236, 0) 70%);
+  opacity: 0;
+  transition: opacity 1s ease 0.6s;
+  pointer-events: none;
+}
+
+.store--opening .store__doorway::before {
+  opacity: 1;
+}
+
+/* Glass doors, hinged at their outer edges, swinging inward */
+.store__door {
+  position: relative;
+  flex: 1;
+  border: 9px solid var(--bronze);
+  border-bottom-width: 22px;
+  background: rgba(250, 240, 234, 0.38);
+  -webkit-backdrop-filter: blur(6px) saturate(1.05);
+  backdrop-filter: blur(6px) saturate(1.05);
+  box-shadow:
+    inset 0 0 0 1px var(--bronze-dark),
+    0 0 0 1px var(--bronze-dark);
+  transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.3s;
   will-change: transform;
 }
 
-.intro__door--left {
-  left: 0;
-  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.45);
+.store__door--left {
+  transform-origin: 0% 50%;
 }
 
-.intro__door--right {
-  right: 0;
-  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.45);
+.store__door--right {
+  transform-origin: 100% 50%;
 }
 
-/* The seam where the doors meet: a fine #E19999 line with a soft glow */
-.intro__door--left::after {
+.store--opening .store__door--left {
+  transform: rotateY(84deg);
+}
+
+.store--opening .store__door--right {
+  transform: rotateY(-84deg);
+}
+
+/* the glass darkens as it turns away from the light */
+.store__door::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 1px;
-  /* bright above and below, fading out behind the centre content */
-  background: linear-gradient(
-    180deg,
-    rgba(225, 153, 153, 0) 0%,
-    #e19999 14%,
-    rgba(225, 153, 153, 0.55) 26%,
-    rgba(225, 153, 153, 0) 33%,
-    rgba(225, 153, 153, 0) 67%,
-    rgba(225, 153, 153, 0.55) 74%,
-    #e19999 86%,
-    rgba(225, 153, 153, 0) 100%
-  );
-  box-shadow: 0 0 10px 1px rgba(225, 153, 153, 0.55);
-}
-
-.intro--opening .intro__door--left {
-  transform: translateX(-100%);
-}
-
-.intro--opening .intro__door--right {
-  transform: translateX(100%);
-}
-
-/* Centre content */
-.intro__content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: min(100% - 2.5rem, 36rem);
-  text-align: center;
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
-}
-
-/* soft rose light behind the logo */
-.intro__content::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -30% -25%;
-  background: radial-gradient(closest-side, rgba(225, 153, 153, 0.22), rgba(225, 153, 153, 0));
+  inset: 0;
+  background: rgba(60, 45, 38, 0.45);
+  opacity: 0;
+  transition: opacity 1.4s ease 0.3s;
   pointer-events: none;
 }
 
-.intro--opening .intro__content {
+.store--opening .store__door::after {
+  opacity: 1;
+}
+
+/* long bronze pull handles beside the meeting edge */
+.store__handle {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  width: 7px;
+  height: clamp(5rem, 22%, 9rem);
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bronze-dark), var(--bronze-light) 45%, var(--bronze));
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-50%);
+}
+
+.store__door--left .store__handle {
+  right: 12%;
+}
+
+.store__door--right .store__handle {
+  left: 12%;
+}
+
+/* Marble floor with a rose inlay */
+.store__floor {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(74, 53, 49, 0.18), rgba(74, 53, 49, 0) 30%),
+    linear-gradient(100deg, #f3ece5, #fbf7f3 40%, #efe6de 70%, #f8f2ec);
+}
+
+.store__floor::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58%;
+  height: 4px;
+  background: #e19999;
+  box-shadow: 0 0 10px rgba(225, 153, 153, 0.6);
+}
+
+/* ---- Text and button, centred on the doors ---- */
+.store__content {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: calc(var(--fascia-h) + (100% - var(--fascia-h) - var(--floor-h)) / 2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100% - 3rem, 27rem);
+  padding: clamp(1.25rem, 3vh, 1.9rem) clamp(1.25rem, 3vw, 2rem);
+  background: rgba(255, 250, 246, 0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 24px 50px -24px rgba(74, 53, 49, 0.5);
+  text-align: center;
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* fine stitched border, like a boutique card */
+.store__content::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed rgba(225, 153, 153, 0.8);
+  pointer-events: none;
+}
+
+.store--opening .store__content {
   opacity: 0;
-  transform: scale(0.94);
+  transform: translate(-50%, -50%) scale(0.94);
 }
 
-.intro__content > * {
-  animation: intro-rise 0.9s var(--ease-out) both;
+.store__content > * {
+  animation: store-rise 0.9s var(--ease-out) both;
 }
 
-.intro__content > :nth-child(1) { animation-delay: 0.15s; }
-.intro__content > :nth-child(2) { animation-delay: 0.35s; }
-.intro__content > :nth-child(3) { animation-delay: 0.5s; }
-.intro__content > :nth-child(4) { animation-delay: 0.65s; }
+.store__content > :nth-child(1) { animation-delay: 0.35s; }
+.store__content > :nth-child(2) { animation-delay: 0.5s; }
+.store__content > :nth-child(3) { animation-delay: 0.65s; }
 
-@keyframes intro-rise {
+@keyframes store-rise {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -2089,86 +2274,81 @@ main > section {
   }
 }
 
-.intro__logo {
-  width: clamp(13rem, 32vw, 19rem);
-}
-
-.intro__heading {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1.75rem;
+.store__heading {
   color: var(--rose-deep);
-  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  font-size: clamp(0.8rem, 1.4vw, 0.95rem);
   font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+  letter-spacing: 0.26em;
   line-height: 1.5;
+  text-transform: uppercase;
 }
 
-.intro__rule {
-  flex: none;
-  width: 2.5rem;
-  border-top: 1px solid #e19999;
-}
-
-.intro__text {
-  max-width: 32ch;
-  margin-top: 1rem;
-  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
-  line-height: 1.6;
+.store__text {
+  margin-top: 0.75rem;
+  font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+  line-height: 1.55;
   color: var(--ink);
 }
 
-.intro__button {
+.store__button {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
-  min-height: 3.4rem;
-  margin-top: 2rem;
-  padding: 0.9rem 2rem;
+  gap: 0.8rem;
+  min-height: 3.2rem;
+  margin-top: 1.4rem;
+  padding: 0.8rem 1.8rem;
   border: 1px solid #e19999;
-  background: rgba(255, 250, 246, 0.7);
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  outline: 1px dashed rgba(225, 153, 153, 0.7);
-  outline-offset: 4px;
-  box-shadow: 0 12px 30px -14px rgba(225, 153, 153, 0.8);
+  box-shadow: 0 10px 24px -12px rgba(225, 153, 153, 0.9);
   cursor: pointer;
   transition:
     background-color 0.35s ease,
-    box-shadow 0.35s ease,
-    outline-offset 0.35s ease;
+    box-shadow 0.35s ease;
 }
 
-.intro__button:hover {
+.store__button:hover {
   background: #e19999;
-  outline-offset: 6px;
-  box-shadow: 0 16px 34px -12px rgba(225, 153, 153, 0.95);
+  box-shadow: 0 14px 30px -10px rgba(225, 153, 153, 1);
 }
 
-.intro__button:focus-visible {
+.store__button:focus-visible {
   outline: 2px solid #e19999;
-  outline-offset: 5px;
+  outline-offset: 4px;
 }
 
-.intro__arrow {
+.store__arrow {
   transition: transform 0.35s var(--ease-out);
 }
 
-.intro__button:hover .intro__arrow {
+.store__button:hover .store__arrow {
   transform: translateX(5px);
 }
 
-@media (max-width: 420px) {
-  .intro__rule {
+/* Phones & narrow tablets: just the entrance between two pilasters */
+@media (max-width: 767px) {
+  :root {
+    --fascia-h: clamp(6rem, 16vh, 8rem);
+  }
+
+  .store__front {
+    grid-template-columns: clamp(1rem, 5vw, 2rem) minmax(0, 1fr) clamp(1rem, 5vw, 2rem);
+  }
+
+  .store__window {
     display: none;
   }
 
-  .intro__heading {
-    letter-spacing: 0.18em;
+  .store__door {
+    border-width: 7px;
+    border-bottom-width: 18px;
+  }
+
+  .store__handle {
+    width: 5px;
   }
 }
