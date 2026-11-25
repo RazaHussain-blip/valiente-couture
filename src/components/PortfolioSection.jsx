@@ -14,7 +14,7 @@ export default function PortfolioSection() {
           <header className="gallery-intro" data-reveal>
             <FabricLabel>{creations.label}</FabricLabel>
             <h2 id="creations-title" className="display-heading">
-              {creations.title[0]} <em>{creations.title[1]}</em>
+              {creations.title.join(" ")}
             </h2>
             <p>{creations.text}</p>
             <ul className="garment-labels" aria-label="Garments">

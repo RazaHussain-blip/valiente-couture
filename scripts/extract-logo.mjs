@@ -3,7 +3,8 @@
  * instead of real transparency. This extracts the burgundy lettering into
  * clean transparent PNG/WebP files. The original file is not modified.
  *
- *   node scripts/extract-logo.mjs
+ *   node scripts/extract-logo.mjs          (all colours)
+ *   node scripts/extract-logo.mjs rose     (just one colour)
  */
 import sharp from "sharp";
 
@@ -16,9 +17,13 @@ const { width, height } = info;
 const variants = {
   burgundy: [107, 36, 50],
   ivory: [251, 244, 236],
+  rose: [225, 153, 153], // #E19999 - used on the site
 };
 
+const only = process.argv[2];
+
 for (const [name, [R, G, B]] of Object.entries(variants)) {
+  if (only && name !== only) continue;
   const out = Buffer.alloc(width * height * 4);
   for (let i = 0, j = 0; i < data.length; i += 3, j += 4) {
     const r = data[i], g = data[i + 1], b = data[i + 2];

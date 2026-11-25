@@ -15,9 +15,7 @@ export default function ContactSection() {
             <div className="invite-copy">
               <FabricLabel>{invitation.eyebrow}</FabricLabel>
               <h2 id="invite-title" className="display-heading">
-                {invitation.title[0]}
-                <br />
-                <em>{invitation.title[1]}</em>
+                {invitation.title.join(" ")}
               </h2>
               <p className="invite-text">{invitation.text}</p>
 

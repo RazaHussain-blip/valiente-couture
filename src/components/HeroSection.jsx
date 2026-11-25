@@ -21,9 +21,7 @@ export default function HeroSection() {
           </p>
 
           <h1 className="hero-title">
-            {hero.titleLines[0]}
-            <br />
-            {hero.titleLines[1]} <em>{hero.titleLines[2]}</em>
+            {hero.titleLines.join(" ")}
           </h1>
 
           <p className="hero-text">{hero.text}</p>

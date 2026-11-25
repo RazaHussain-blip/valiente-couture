@@ -12,9 +12,7 @@ export default function ProcessSection() {
           <header className="section-intro" data-reveal>
             <FabricLabel>{craftsmanship.label}</FabricLabel>
             <h2 id="process-title" className="display-heading">
-              {craftsmanship.title[0]}
-              <br />
-              <em>{craftsmanship.title[1]}</em>
+              {craftsmanship.title.join(" ")}
             </h2>
           </header>
 

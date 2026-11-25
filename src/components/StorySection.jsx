@@ -31,9 +31,7 @@ export default function StorySection() {
               <FabricLabel>{story.eyebrow}</FabricLabel>
             </div>
             <h2 id="story-title" className="display-heading" data-reveal>
-              {story.title[0]}
-              <br />
-              <em>{story.title[1]}</em>
+              {story.title.join(" ")}
             </h2>
             <p className="story-lead" data-reveal>
               {story.lead}

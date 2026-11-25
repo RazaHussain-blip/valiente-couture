@@ -18,9 +18,7 @@ export default function CoCreationSection() {
           <header className="cocreation-copy" data-reveal>
             <FabricLabel>{coCreation.label}</FabricLabel>
             <h2 id="cocreation-title" className="display-heading">
-              {coCreation.title[0]}
-              <br />
-              <em>{coCreation.title[1]}</em>
+              {coCreation.title.join(" ")}
             </h2>
             {coCreation.paragraphs.map((p) => (
               <p key={p} className="cocreation-text">

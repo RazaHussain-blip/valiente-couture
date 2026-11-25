@@ -33,7 +33,7 @@ export default function TestimonialsSection() {
         <header className="notes-head" data-reveal>
           <FabricLabel>Valiente Couture</FabricLabel>
           <h2 id="testimonials-title" className="display-heading">
-            <em>Testimonials</em>
+            Testimonials
           </h2>
         </header>
 

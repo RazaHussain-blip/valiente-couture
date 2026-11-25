@@ -97,6 +97,7 @@ export const images = {
 
 /** Client logo (transparent versions extracted from "logo 2.png" by scripts/extract-logo.mjs). */
 export const logo = {
+  rose: `${BASE}images/logo-rose`, // #E19999, used on the site
   burgundy: `${BASE}images/logo-burgundy`,
   ivory: `${BASE}images/logo-ivory`,
   w: 1200,

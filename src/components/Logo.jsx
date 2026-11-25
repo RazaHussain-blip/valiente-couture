@@ -1,7 +1,7 @@
 import { logo } from "../data/images";
 
-/** The Valiente Couture logo. tone: "burgundy" (light backgrounds) | "ivory" (dark). */
-export default function Logo({ tone = "burgundy", className = "", priority = false }) {
+/** The Valiente Couture logo. tone: "rose" (#E19999, default) | "burgundy" | "ivory" (dark backgrounds). */
+export default function Logo({ tone = "rose", className = "", priority = false }) {
   const base = logo[tone];
   return (
     <picture className={`logo ${className}`}>
