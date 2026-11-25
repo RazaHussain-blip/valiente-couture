@@ -1,20 +1,14 @@
 import { brand, contact, invitation } from "../data/content";
 import Photo from "./Photo";
 import TestimonialsSection from "./TestimonialsSection";
-import { FabricLabel, Swatch, TapeStrip } from "./decor/Textiles";
-import { SilkDrape, Tweed } from "./decor/FabricPieces";
-import SvgAsset from "./decor/SvgAsset";
+import { FabricLabel } from "./decor/Textiles";
 
 export default function ContactSection() {
   return (
     <section id="contact" className="contact" aria-labelledby="invite-title">
       <TestimonialsSection />
 
-      <div className="invite tex-folds">
-        <div className="section-pieces" aria-hidden="true">
-          <SilkDrape tone="blush" className="piece piece--invite-drape" />
-          <Tweed tone="rose" className="piece piece--invite-tweed" />
-        </div>
+      <div className="invite">
 
         <div className="container-x">
           <div className="invite-frame" data-reveal>
@@ -68,16 +62,10 @@ export default function ContactSection() {
             </div>
 
             <div className="invite-media">
-              <Swatch kind="tweed" className="invite-media__swatch" />
               <figure className="pinned-photo invite-media__photo">
-                <TapeStrip className="pinned-photo__tape" />
                 <Photo image={invitation.image} className="aspect-4/5" sizes="(min-width: 1024px) 18rem, 70vw" />
                 <figcaption>{brand.designer}</figcaption>
               </figure>
-              <span className="invite-media__buttons" aria-hidden="true">
-                <SvgAsset name="shirtButton" className="deco-button deco-button--lg" />
-                <SvgAsset name="shirtButton" className="deco-button" />
-              </span>
             </div>
           </div>
         </div>

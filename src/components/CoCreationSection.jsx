@@ -1,19 +1,18 @@
+import { useState } from "react";
 import { coCreation } from "../data/content";
 import Photo from "./Photo";
+import GalleryLightbox from "./GalleryLightbox";
 import { FabricLabel } from "./decor/Textiles";
-import { Tweed } from "./decor/FabricPieces";
-import SvgAsset from "./decor/SvgAsset";
 
-/** The Process: the client's co-creation paragraph [P7] with garments made for clients. */
+/**
+ * The Process: the client's co-creation paragraph [P7].
+ * Each photo opens a pop-up gallery of the pictures related to it.
+ */
 export default function CoCreationSection() {
-  return (
-    <div className="cocreation tex-ivory">
-      <div className="section-pieces" aria-hidden="true">
-        <Tweed tone="rose" className="piece piece--services-tweed" />
-        <Tweed tone="blush" className="piece piece--services-tweed2" />
-        <SvgAsset name="shirtButton" className="piece piece--services-btn deco-button deco-button--lg" />
-      </div>
+  const [openIndex, setOpenIndex] = useState(null);
 
+  return (
+    <div className="cocreation">
       <div className="container-x">
         <div className="cocreation-grid">
           <header className="cocreation-copy" data-reveal>
@@ -31,14 +30,33 @@ export default function CoCreationSection() {
           </header>
 
           <div className="cocreation-photos" data-reveal>
-            {coCreation.photos.map((image, i) => (
-              <div key={image.src} className={`cocreation-photo cocreation-photo--${i + 1}`}>
-                <Photo image={image} className="aspect-3/4" compact sizes="(min-width: 1024px) 20vw, 45vw" />
-              </div>
-            ))}
+            {coCreation.galleries.map((gallery, i) => {
+              const [cover] = gallery;
+              return (
+                <button
+                  key={cover.src}
+                  type="button"
+                  className={`cocreation-photo cocreation-photo--${i + 1}`}
+                  onClick={() => setOpenIndex(i)}
+                  aria-haspopup="dialog"
+                  aria-label={`Open gallery, ${gallery.length} photos: ${cover.alt}`}
+                >
+                  <Photo image={cover} className="aspect-3/4" compact sizes="(min-width: 1024px) 20vw, 45vw" />
+                  <span className="cocreation-photo__hint" aria-hidden="true">
+                    View gallery <span>{gallery.length}</span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
+
+      <GalleryLightbox
+        images={openIndex === null ? [] : coCreation.galleries[openIndex]}
+        open={openIndex !== null}
+        onClose={() => setOpenIndex(null)}
+      />
     </div>
   );
 }

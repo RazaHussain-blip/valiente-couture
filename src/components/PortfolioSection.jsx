@@ -1,24 +1,17 @@
 import { contact, creations, portfolio } from "../data/content";
 import Photo from "./Photo";
-import { SilkDrape, Tweed } from "./decor/FabricPieces";
-import SvgAsset from "./decor/SvgAsset";
 import { FabricLabel } from "./decor/Textiles";
 
 export default function PortfolioSection() {
   const [first, ...rest] = portfolio;
 
   return (
-    <section id="creations" className="creations tex-paper" aria-labelledby="creations-title">
-      <div className="section-pieces" aria-hidden="true">
-        <SilkDrape tone="blush" className="piece piece--gallery-drape" />
-        <Tweed tone="rose" className="piece piece--gallery-tweed" />
-      </div>
+    <section id="creations" className="creations" aria-labelledby="creations-title">
       <div className="container-x">
         <div className="gallery">
           <GalleryItem item={first} index={0} />
 
           <header className="gallery-intro" data-reveal>
-            <SvgAsset name="mannequin" className="gallery-mannequin" />
             <FabricLabel>{creations.label}</FabricLabel>
             <h2 id="creations-title" className="display-heading">
               {creations.title[0]} <em>{creations.title[1]}</em>
@@ -56,7 +49,6 @@ function GalleryItem({ item, index }) {
       </div>
       <figcaption className="gallery-item__caption">
         <span className="gallery-item__no">
-          <SvgAsset name="shirtButton" className="gallery-item__button" />
           No. {String(index + 1).padStart(2, "0")}
         </span>
         <span className="gallery-item__title">{item.title}</span>

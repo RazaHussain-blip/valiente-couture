@@ -1,24 +1,34 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { testimonials } from "../data/content";
-import { FabricLabel, TapeStrip } from "./decor/Textiles";
-import { SilkDrape, Tweed } from "./decor/FabricPieces";
-import SvgAsset from "./decor/SvgAsset";
+import { FabricLabel } from "./decor/Textiles";
+
+const AUTOPLAY_MS = 9000;
 
 /**
- * Client testimonials, presented as personal notes pinned to the fabric.
- * The longest letter is featured; the others sit beside it at their
- * natural heights.
+ * Client testimonials as a carousel of personal notes.
+ * Arrows, dots, keyboard arrows and swipe all move between notes.
+ * It advances on its own, pauses while hovered or focused, and stays
+ * still for visitors who prefer reduced motion.
  */
 export default function TestimonialsSection() {
-  if (testimonials.length === 0) return null;
-  const [featured, ...others] = testimonials;
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const touchX = useRef(null);
+  const count = testimonials.length;
+
+  const go = useCallback((step) => setCurrent((i) => (i + step + count) % count), [count]);
+
+  useEffect(() => {
+    if (count < 2 || paused) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const timer = setTimeout(() => go(1), AUTOPLAY_MS);
+    return () => clearTimeout(timer);
+  }, [current, paused, count, go]);
+
+  if (count === 0) return null;
 
   return (
-    <div className="notes tex-blush">
-      <div className="section-pieces" aria-hidden="true">
-        <Tweed tone="ivory" className="piece piece--notes-tweed" />
-        <SilkDrape tone="ivory" className="piece piece--notes-drape" />
-      </div>
-
+    <div className="notes">
       <div className="container-x">
         <header className="notes-head" data-reveal>
           <FabricLabel>Valiente Couture</FabricLabel>
@@ -27,13 +37,70 @@ export default function TestimonialsSection() {
           </h2>
         </header>
 
-        <div className="notes-grid" aria-labelledby="testimonials-title" role="group">
-          <Note item={featured} featured />
-          {others.length > 0 && (
-            <div className="notes-stack">
-              {others.map((item) => (
-                <Note key={item.name} item={item} />
+        <div
+          className="carousel"
+          role="region"
+          aria-roledescription="carousel"
+          aria-labelledby="testimonials-title"
+          data-reveal
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setPaused(false)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") go(1);
+            if (e.key === "ArrowLeft") go(-1);
+          }}
+        >
+          <div
+            className="carousel__viewport"
+            onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+            onTouchEnd={(e) => {
+              if (touchX.current === null) return;
+              const dx = e.changedTouches[0].clientX - touchX.current;
+              if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+              touchX.current = null;
+            }}
+          >
+            <div className="carousel__track" style={{ transform: `translateX(-${current * 100}%)` }}>
+              {testimonials.map((item, i) => (
+                <div
+                  key={item.name}
+                  className="carousel__slide"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} of ${count}`}
+                  aria-hidden={i !== current}
+                  inert={i !== current}
+                >
+                  <Note item={item} />
+                </div>
               ))}
+            </div>
+          </div>
+
+          {count > 1 && (
+            <div className="carousel__controls">
+              <button type="button" className="carousel__arrow" onClick={() => go(-1)} aria-label="Previous testimonial">
+                <span aria-hidden="true">&larr;</span>
+              </button>
+
+              <div className="carousel__dots">
+                {testimonials.map((item, i) => (
+                  <button
+                    key={item.name}
+                    type="button"
+                    className={`carousel__dot ${i === current ? "is-active" : ""}`}
+                    onClick={() => setCurrent(i)}
+                    aria-label={`Show testimonial ${i + 1} of ${count}, from ${item.name}`}
+                    aria-current={i === current ? "true" : undefined}
+                  />
+                ))}
+              </div>
+
+              <button type="button" className="carousel__arrow" onClick={() => go(1)} aria-label="Next testimonial">
+                <span aria-hidden="true">&rarr;</span>
+              </button>
             </div>
           )}
         </div>
@@ -42,10 +109,9 @@ export default function TestimonialsSection() {
   );
 }
 
-function Note({ item, featured = false }) {
+function Note({ item }) {
   return (
-    <figure className={`note ${featured ? "note--featured" : ""}`} data-reveal>
-      <TapeStrip className="note__tape" />
+    <figure className="note">
       <span className="note__mark" aria-hidden="true">
         &ldquo;
       </span>
@@ -53,11 +119,8 @@ function Note({ item, featured = false }) {
         <p>{item.quote}</p>
       </blockquote>
       <figcaption className="note__author">
-        <SvgAsset name="shirtButton" className="note__button" />
-        <span className="note__who">
-          <span className="woven-name">{item.name}</span>
-          {item.detail && <span className="note__detail">{item.detail}</span>}
-        </span>
+        <span className="woven-name">{item.name}</span>
+        {item.detail && <span className="note__detail">{item.detail}</span>}
       </figcaption>
     </figure>
   );

@@ -46,11 +46,11 @@ const photos = {
   waffleKnit: img("portfolio-img-2.jpeg", "A relaxed waffle-weave garment made by Dianna, worn by a client", 1156, 1174,
     { position: "55% 40%", zoom: 1.02, origin: "50% 100%" }),
   inProgress: img("portfolio-img-3.jpeg", "A garment in progress on the cutting table with pins, tape measure and the Valiente Couture label", 1170, 1163,
-    { position: "0% 60%" }), // left-anchored crop hides the Instagram badge
+    { position: "0% 60%", lightbox: { zoom: 1.18, origin: "0% 100%" } }), // left-anchored crop hides the Instagram badge
   houndstooth: img("portfolio-img-4.jpeg", "Houndstooth wool with a silk lining and the Valiente Couture label", 1170, 1162,
     { position: "30% 50%" }),
   blackJumpsuit: img("portfolio-img-5.jpeg", "A client laughing in an elegant black outfit made by Dianna", 1170, 1452,
-    { position: "40% 30%", zoom: 1.12, origin: "0% 100%" }), // hides the Instagram badge
+    { position: "40% 30%", zoom: 1.12, origin: "0% 100%", lightbox: { zoom: 1.18, origin: "0% 100%" } }), // hides the Instagram badge
   plaidDress: img("portfolio-img-6.jpeg", "A fitted plaid dress with a lace-trimmed petticoat", 1170, 1458,
     { position: "50% 45%" }),
   linedCoat: img("portfolio-img-7.jpeg", "A soft wool coat with a printed silk lining", 1170, 1148,
@@ -68,15 +68,14 @@ export const images = {
      would sit even more naturally on the fabric. */
   heroSlides: [photos.showJacketAtelier],
 
-  /* Optional: a real photograph of draped ivory fabric for the page backdrop. */
-  backdrop: null,
-
   /* Story */
   diannaPortrait: photos.ownerFitting,
   fabricSelection: photos.laceHem,
 
-  /* Process */
+  /* Process (personal style cards) */
   fabricsButtons: photos.houndstooth,
+  fabricSources: photos.tweedJacket,
+  parisButtons: photos.showJacketDetail,
   tailoringProcess: photos.inProgress,
 
   /* Services */
@@ -104,11 +103,14 @@ export const logo = {
   h: 311,
 };
 
-/** Decorative SVG assets supplied by the client (public/images). */
-export const svgAssets = {
-  sewingMachine: `${BASE}images/sewing-machine-fashion-svgrepo-com.svg`,
-  measuringTape: `${BASE}images/measuring-tape-tool-svgrepo-com.svg`,
-  spool: `${BASE}images/spool-of-thread-fashion-svgrepo-com.svg`,
-  mannequin: `${BASE}images/mannequin-mannequin-svgrepo-com.svg`,
-  shirtButton: `${BASE}images/shirt-button-svgrepo-com.svg`,
+/**
+ * Process-section galleries. Each of the four co-creation photos opens a
+ * pop-up gallery: the main picture first, then the pictures related to it.
+ * To add more related photos, append entries to the matching list.
+ */
+export const galleries = {
+  evening: [photos.blackJumpsuit, photos.plaidDress, photos.laceHem],
+  outerwear: [photos.linedCoat, photos.camelCoat, photos.houndstooth],
+  tailoring: [photos.linenTrousers, photos.inProgress, photos.showJacketAtelier, photos.showJacketDetail],
+  bespoke: [photos.waffleKnit, photos.tweedJacket, photos.ownerFitting, photos.owner],
 };

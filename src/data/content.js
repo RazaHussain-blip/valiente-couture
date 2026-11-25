@@ -1,4 +1,4 @@
-import { images } from "./images";
+import { galleries, images } from "./images";
 
 /* ---------------------------------------------------------------
    SITE CONTENT
@@ -82,38 +82,39 @@ export const craftsmanship = {
   title: ["A timeless", "personal style."], // [P2] phrase
 };
 
-/**
- * `visual`: { type: "swatches" | "photo" | "buttons", caption, image? }
- * Captions are short phrases from the document.
- */
+/** `image` + `caption` (a short phrase from the document) shown on each card. */
 export const processSteps = [
   {
     number: "01",
     title: "A timeless personal style", // [P2] phrase
     text:
       "When Dianna talks about fashion she is not talking about short term trends, but about creating a timeless personal style. Of course the fabric is a vital part of the design and of the longevity of each garment.", // [P2]
-    visual: { type: "photo", image: images.fabricsButtons, caption: "Silks, woollens, cottons, linens" },
+    image: images.fabricsButtons,
+    caption: "Silks, woollens, cottons, linens",
   },
   {
     number: "02",
     title: "Italy, France, England and Scotland", // [P2] phrase
     text:
       "Over the years Dianna has found sources of exquisite silks, woollens, cottons, linens and other goods that she orders directly from Italy, France, England and Scotland. These will wear beautifully for years to come.", // [P2]
-    visual: { type: "swatches", caption: "Exquisite silks, woollens, cottons, linens" },
+    image: images.fabricSources,
+    caption: "Exquisite silks, woollens, cottons, linens",
   },
   {
     number: "03",
     title: "Buttons from Paris", // [P3] phrase
     text:
       "Her attention to detail continues with her choices of threads and stitching patterns and other finishing touches. For example she sources buttons from Paris, sometimes having them custom designed and made to order for a particular garment. She compares these to jewellery for clothing!", // [P3]
-    visual: { type: "buttons", caption: "Jewellery for clothing" },
+    image: images.parisButtons,
+    caption: "Jewellery for clothing",
   },
   {
     number: "04",
     title: "In consultation with her clients", // [P4] phrase
     text:
       "All of these decisions are made in consultation with her clients. This process is delightful and exciting. Dianna loves what she does and her joy and sense of anticipation are infectious. The collaboration involves pouring over fabric swatches and button samples with Dianna; benefiting from her well honed style sense and her years of experience.", // [P4]
-    visual: { type: "photo", image: images.tailoringProcess, caption: "Fabric swatches and button samples" },
+    image: images.tailoringProcess,
+    caption: "Fabric swatches and button samples",
   },
 ];
 
@@ -125,7 +126,8 @@ export const coCreation = {
     "The experience is a key part of this journey with Valiente Couture. It is an exciting and delightful process of co-creation.", // [P7]
     "It begins with a dream, a wish from a client, and with Dianna’s guidance and her creative and technical brilliance the dream becomes a reality in a garment created just for them.", // [P7]
   ],
-  photos: [images.serviceEvening, images.serviceOuterwear, images.serviceTailoring, images.serviceBespoke],
+  /* Each photo opens a pop-up gallery of related pictures (see `galleries` in images.js). */
+  galleries: [galleries.evening, galleries.outerwear, galleries.tailoring, galleries.bespoke],
 };
 
 /* ---------------- Services & Creations ---------------- */

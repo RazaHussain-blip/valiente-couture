@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <a href="#home" className="footer-brand__name" aria-label={`${brand.name}, back to top`}>
-              <Logo tone="ivory" className="footer-logo" />
+              <Logo className="footer-logo" />
             </a>
             <p>{brand.tagline}</p>
           </div>
