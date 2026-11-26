@@ -1587,6 +1587,11 @@ main > section {
   padding-block: var(--section-space);
 }
 
+/* this section gets a wider container than the rest of the page */
+.invite .container-x {
+  max-width: 1480px;
+}
+
 .invite-frame {
   position: relative;
   display: grid;
@@ -1631,10 +1636,19 @@ main > section {
 .invite-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem 3.5rem;
+  gap: 1.25rem 2rem;
   margin-top: 2rem;
   padding-top: 1.75rem;
   border-top: 1.5px dashed var(--stitch);
+}
+
+.invite-details > div {
+  white-space: nowrap;
+}
+
+/* Email, Instagram and Facebook share one line; "Based in" sits below */
+.invite-details > div:nth-child(n + 4) {
+  flex-basis: 100%;
 }
 
 .invite-details dt {
@@ -1648,7 +1662,7 @@ main > section {
 .invite-details dd {
   margin-top: 0.25rem;
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--ink);
 }
 
@@ -1656,6 +1670,13 @@ main > section {
   text-decoration: underline;
   text-decoration-color: var(--rose);
   text-underline-offset: 5px;
+}
+
+.invite-photo {
+  --tilt: -2.5deg;
+  width: min(16rem, 70%);
+  margin: 2.5rem 0 0 0.5rem;
+  padding-bottom: 10px;
 }
 
 .invite-details a:hover {
@@ -1799,11 +1820,15 @@ main > section {
     padding-top: 1.5rem;
   }
 
-  /* copy on the left, brief form on the right */
+}
+
+/* copy + photo on the left, brief form on the right */
+@media (min-width: 1200px) {
   .invite-frame {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     align-items: start;
-    column-gap: clamp(2.5rem, 4vw, 4rem);
+    column-gap: clamp(2.5rem, 4vw, 4.5rem);
+    padding-inline: clamp(2rem, 4vw, 3.75rem);
   }
 }
 
@@ -1831,6 +1856,10 @@ main > section {
   .invite-details {
     flex-direction: column;
     gap: 1.25rem;
+  }
+
+  .invite-photo {
+    margin-inline: auto;
   }
 }
 
