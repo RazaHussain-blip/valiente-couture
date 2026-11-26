@@ -18,7 +18,16 @@ export default function CoCreationSection() {
           <header className="cocreation-copy" data-reveal>
             <FabricLabel>{coCreation.label}</FabricLabel>
             <h2 id="cocreation-title" className="display-heading">
-              {coCreation.title.join(" ")}
+              {/* keep "co-creation" together instead of breaking at the hyphen */}
+              {coCreation.title
+                .join(" ")
+                .split(" ")
+                .map((word, i) => (
+                  <span key={i}>
+                    {i > 0 && " "}
+                    {word.includes("-") ? <span className="nowrap">{word}</span> : word}
+                  </span>
+                ))}
             </h2>
             {coCreation.paragraphs.map((p) => (
               <p key={p} className="cocreation-text">

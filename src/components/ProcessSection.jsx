@@ -22,7 +22,11 @@ export default function ProcessSection() {
                 <div className="journey-card__body">
                   <p className="journey-card__label">{step.caption}</p>
                   <h3>{step.title}</h3>
-                  <p>{step.text}</p>
+                  {step.paragraphs.map((p) => (
+                    <p key={p} className="journey-card__text">
+                      {p}
+                    </p>
+                  ))}
                 </div>
                 <div className="journey-card__media">
                   <Photo

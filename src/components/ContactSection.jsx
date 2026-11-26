@@ -18,6 +18,11 @@ export default function ContactSection() {
                 {invitation.title.join(" ")}
               </h2>
               <p className="invite-text">{invitation.text}</p>
+              {invitation.paragraphs.map((p) => (
+                <p key={p} className="invite-subtext">
+                  {p}
+                </p>
+              ))}
 
               <dl className="invite-details">
                 <div>

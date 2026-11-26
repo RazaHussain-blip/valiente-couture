@@ -77,6 +77,7 @@ export const images = {
   fabricSources: photos.tweedJacket,
   parisButtons: photos.showJacketDetail,
   tailoringProcess: photos.inProgress,
+  fitting: photos.showJacketAtelier,
 
   /* Services */
   serviceBespoke: photos.waffleKnit,

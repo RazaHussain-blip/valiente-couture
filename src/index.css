@@ -132,6 +132,10 @@ main > section {
   max-width: 48rem;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -957,9 +961,13 @@ main > section {
   line-height: 1.15;
 }
 
-.journey-card__body > p:last-child {
+.journey-card__text {
   font-size: var(--text-size);
   line-height: 1.8;
+}
+
+.journey-card__text + .journey-card__text {
+  margin-top: 0.9rem;
 }
 
 @media (min-width: 900px) {
@@ -1683,6 +1691,13 @@ main > section {
 .invite-copy {
   position: relative;
   z-index: 1;
+}
+
+.invite-subtext {
+  max-width: 44em;
+  margin-top: 1rem;
+  font-size: var(--text-size);
+  line-height: 1.8;
 }
 
 .invite-text {
