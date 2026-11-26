@@ -722,40 +722,6 @@ main > section {
   box-shadow: var(--shadow-card);
 }
 
-.story-media__detail {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0.5rem;
-  width: 42%;
-  padding: 8px;
-  background: var(--paper);
-  box-shadow: 0 22px 40px -16px rgba(74, 53, 49, 0.36);
-  transform: rotate(2.5deg);
-}
-
-.story-media__origins {
-  max-width: 48%;
-  margin: 2.25rem 0 0 6%;
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-style: italic;
-  line-height: 1.5;
-  color: var(--ink);
-}
-
-.story-media__origins span {
-  display: block;
-  margin-bottom: 0.25rem;
-  font-family: var(--font-body);
-  font-style: normal;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--rose-deep);
-}
-
 .story-lead {
   max-width: 36em;
   margin: 1.4rem 0 2rem;
@@ -1855,15 +1821,7 @@ main > section {
     width: 88%;
   }
 
-  .story-media__detail {
-    width: 46%;
-    padding: 6px;
-  }
 
-  .story-media__origins {
-    margin-left: 0;
-    font-size: 1.1rem;
-  }
 
   .note__mark {
     font-size: 6rem;

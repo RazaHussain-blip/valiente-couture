@@ -71,10 +71,7 @@ export const story = {
   quote: "As Dianna says, she is sculpting with fabric to create a perfect piece of clothing.",
   signature: brand.designer,
   signatureRole: brand.fullName,
-  originsLabel: "Fabrics from",
-  fabricOrigins: ["Scotland", "Britain", "Italy", "Japan"],
   mainImage: images.diannaPortrait,
-  detailImage: images.fabricSelection,
 };
 
 /* ---------------- Fabrics & Craftsmanship (alternating rows) ---------------- */

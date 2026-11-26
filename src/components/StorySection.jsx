@@ -16,13 +16,6 @@ export default function StorySection() {
             <div className="story-media__main">
               <Photo image={story.mainImage} className="aspect-4/5" sizes="(min-width: 1024px) 34vw, 85vw" />
             </div>
-            <div className="story-media__detail">
-              <Photo image={story.detailImage} className="aspect-square" compact sizes="(min-width: 1024px) 18vw, 45vw" />
-            </div>
-            <div className="story-media__origins">
-              <span>{story.originsLabel}</span>
-              {story.fabricOrigins.join(" · ")}
-            </div>
           </div>
 
           {/* The journey */}
