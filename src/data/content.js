@@ -150,11 +150,11 @@ export const creations = {
 
 /** Gallery titles are garment types / phrases from the document. No captions are invented. */
 export const portfolio = [
-  { title: "Chanel style jackets", image: images.jackets, layout: "a" },
-  { title: "One of a kind garments", image: images.dresses, layout: "b" },
-  { title: "Unrivalled fit and finish", image: images.coats, layout: "c" },
-  { title: "Finishing touches", image: images.coutureDetails, layout: "d" },
-  { title: "Equestrian wear", image: images.equestrian, layout: "e" },
+  { title: "Chanel style jackets", image: images.jackets },
+  { title: "One of a kind garments", image: images.dresses },
+  { title: "Unrivalled fit and finish", image: images.coats },
+  { title: "Finishing touches", image: images.coutureDetails },
+  { title: "Equestrian wear", image: images.equestrian },
 ];
 
 /**
