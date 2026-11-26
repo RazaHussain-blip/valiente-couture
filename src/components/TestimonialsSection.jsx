@@ -2,13 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { testimonials } from "../data/content";
 import { FabricLabel } from "./decor/Textiles";
 
-const AUTOPLAY_MS = 9000;
+const AUTOPLAY_MS = 10000;
 
 /**
- * Client testimonials as a carousel of personal notes.
- * Arrows, dots, keyboard arrows and swipe all move between notes.
- * It advances on its own, pauses while hovered or focused, and stays
- * still for visitors who prefer reduced motion.
+ * Client testimonials as a carousel of personal notes, with no visible
+ * navigation. It advances on its own and pauses while hovered or focused.
+ * Visitors can also swipe (touch) or use the arrow keys once it has focus.
+ * With reduced motion the notes change without sliding.
  */
 export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0);
@@ -20,7 +20,6 @@ export default function TestimonialsSection() {
 
   useEffect(() => {
     if (count < 2 || paused) return undefined;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
     const timer = setTimeout(() => go(1), AUTOPLAY_MS);
     return () => clearTimeout(timer);
   }, [current, paused, count, go]);
@@ -42,6 +41,7 @@ export default function TestimonialsSection() {
           role="region"
           aria-roledescription="carousel"
           aria-labelledby="testimonials-title"
+          tabIndex={0}
           data-reveal
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
@@ -78,31 +78,6 @@ export default function TestimonialsSection() {
               ))}
             </div>
           </div>
-
-          {count > 1 && (
-            <div className="carousel__controls">
-              <button type="button" className="carousel__arrow" onClick={() => go(-1)} aria-label="Previous testimonial">
-                <span aria-hidden="true">&larr;</span>
-              </button>
-
-              <div className="carousel__dots">
-                {testimonials.map((item, i) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    className={`carousel__dot ${i === current ? "is-active" : ""}`}
-                    onClick={() => setCurrent(i)}
-                    aria-label={`Show testimonial ${i + 1} of ${count}, from ${item.name}`}
-                    aria-current={i === current ? "true" : undefined}
-                  />
-                ))}
-              </div>
-
-              <button type="button" className="carousel__arrow" onClick={() => go(1)} aria-label="Next testimonial">
-                <span aria-hidden="true">&rarr;</span>
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export const brand = {
   name: "Valiente Couture",
   fullName: "Valiente Couture and Bespoke Services", // [P1]
   designer: "Dianna Coumont",
-  tagline: "Ladies fine custom apparel", // business card
+  tagline: "Ladies fine custom", // business card ("apparel" removed at client request)
   location: "North Saanich, Vancouver Island",
 };
 
