@@ -1526,11 +1526,22 @@ main > section {
   margin-inline: -1.25rem;
   padding-block: 1.5rem 2.5rem;
   touch-action: pan-y;
+  cursor: grab;
+}
+
+.carousel__viewport.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .carousel__track {
   display: flex;
   transition: transform 0.8s var(--ease-out);
+}
+
+/* while dragging and for the unseen loop jump */
+.carousel__track.no-anim {
+  transition: none;
 }
 
 .carousel__slide {
