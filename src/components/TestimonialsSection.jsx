@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { testimonials } from "../data/content";
 import { FabricLabel } from "./decor/Textiles";
 
-const AUTOPLAY_MS = 8000;
+const AUTOPLAY_MS = 4500;
 const SWIPE_THRESHOLD = 0.15; // share of the slide width a drag must travel
 
 /**
