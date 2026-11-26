@@ -1,5 +1,5 @@
 import { brand, contact, invitation } from "../data/content";
-import Photo from "./Photo";
+import BriefForm from "./BriefForm";
 import TestimonialsSection from "./TestimonialsSection";
 import { FabricLabel } from "./decor/Textiles";
 
@@ -64,12 +64,7 @@ export default function ContactSection() {
               </dl>
             </div>
 
-            <div className="invite-media">
-              <figure className="pinned-photo invite-media__photo">
-                <Photo image={invitation.image} className="aspect-4/5" sizes="(min-width: 1024px) 18rem, 70vw" />
-                <figcaption>{brand.designer}</figcaption>
-              </figure>
-            </div>
+            <BriefForm />
           </div>
         </div>
       </div>

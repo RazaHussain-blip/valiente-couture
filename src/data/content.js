@@ -212,3 +212,26 @@ export const invitation = {
   ],
   image: images.tailoringDetail,
 };
+
+/* ---------------- Brief form (contact section, right column) ----------------
+   Submissions are emailed to `recipient` through FormSubmit (formsubmit.co),
+   which needs no account. The very first submission sends Dianna a one-time
+   activation email: she must click its link before briefs are delivered.
+   Questions 1-4 are Dianna's own. */
+export const briefForm = {
+  recipient: "dianna@valiente.ca",
+  label: "Garment brief",
+  title: "Tell Dianna about your garment",
+  questions: [
+    { name: "want", label: "What do you want?", required: true },
+    { name: "concerns", label: "What are your concerns?" },
+    { name: "lifestyle", label: "What is your lifestyle?" },
+  ],
+  occasion: {
+    label: "Is it for everyday, weddings or another occasion?",
+    options: ["Everyday", "Wedding", "Special occasion", "Other"],
+  },
+  submitLabel: "Send my brief",
+  successTitle: "Thank you",
+  successText: "Your brief has been sent to Dianna. She will be in touch with you soon.",
+};

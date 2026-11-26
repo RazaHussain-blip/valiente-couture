@@ -1696,19 +1696,6 @@ main > section {
   color: var(--rose-deep);
 }
 
-.invite-media {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-}
-
-.invite-media__photo {
-  --tilt: 3deg;
-  width: min(16rem, 78%);
-  padding-bottom: 10px;
-}
-
 /* =================================================================
    Footer
 ================================================================= */
@@ -1846,8 +1833,11 @@ main > section {
     padding-top: 1.5rem;
   }
 
+  /* copy on the left, brief form on the right */
   .invite-frame {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    column-gap: clamp(2.5rem, 4vw, 4rem);
   }
 }
 
@@ -2299,5 +2289,260 @@ main > section {
 
   .store__handle {
     width: 5px;
+  }
+}
+
+/* =================================================================
+   Brief form (contact section, right column)
+================================================================= */
+
+.brief {
+  position: relative;
+  z-index: 1;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--bg);
+  border: 1px solid rgba(225, 153, 153, 0.45);
+}
+
+.brief::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed var(--stitch);
+  pointer-events: none;
+}
+
+.brief__title {
+  margin-top: 0.9rem;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  line-height: 1.2;
+}
+
+.brief__lead {
+  margin-top: 0.75rem;
+  font-size: var(--text-size);
+  line-height: 1.75;
+}
+
+.brief__row {
+  display: grid;
+  gap: 0 1rem;
+}
+
+.brief__field {
+  margin: 1.1rem 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.brief__label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  padding: 0;
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+
+.brief__no {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--rose);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transform: translateY(-1px);
+}
+
+.brief__req {
+  color: var(--rose-deep);
+}
+
+.brief__opt {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.brief input[type="text"],
+.brief input[type="email"],
+.brief input[type="tel"],
+.brief textarea {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-size);
+  line-height: 1.5;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.brief textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.brief input:hover,
+.brief textarea:hover {
+  border-color: var(--rose);
+}
+
+.brief input:focus,
+.brief textarea:focus {
+  outline: none;
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px rgba(225, 153, 153, 0.3);
+}
+
+/* only flag empty required fields after someone has tried to submit */
+.brief input:user-invalid,
+.brief textarea:user-invalid {
+  border-color: var(--rose-deep);
+}
+
+/* Occasion: selectable tags */
+.brief__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.brief__chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.6rem;
+  padding: 0.4rem 1rem;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px rgba(166, 95, 95, 0.3);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.brief__chip::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed var(--stitch);
+  pointer-events: none;
+}
+
+.brief__chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.brief__chip:hover {
+  background: var(--blush);
+}
+
+.brief__chip.is-on {
+  background: var(--rose);
+  color: var(--ink);
+}
+
+.brief__chip.is-on::before {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.brief__chip:has(input:focus-visible) {
+  outline: 2px solid var(--rose-deep);
+  outline-offset: 2px;
+}
+
+.brief__other {
+  margin-top: 0.6rem;
+}
+
+.brief__honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.brief__error {
+  margin-top: 1.1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--rose-deep);
+  background: var(--blush);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.brief__error a {
+  color: var(--rose-deep);
+  text-decoration: underline;
+}
+
+.brief__submit,
+.brief__again {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 3.2rem;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.8rem;
+  border: 1px solid var(--rose);
+  background: var(--rose);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -12px rgba(225, 153, 153, 0.9);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.brief__submit:hover,
+.brief__again:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.brief__submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.brief__arrow {
+  transition: transform 0.35s var(--ease-out);
+}
+
+.brief__submit:hover .brief__arrow {
+  transform: translateX(5px);
+}
+
+.brief--sent {
+  align-self: start;
+}
+
+.brief--sent:focus {
+  outline: none;
+}
+
+@media (min-width: 560px) {
+  .brief__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
